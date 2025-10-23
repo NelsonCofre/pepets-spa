@@ -5,10 +5,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import com.example.pepets_spa.ui.screens.*
+import com.example.pepets_spa.navigation.AppNavigation
 import com.example.pepets_spa.viewmodel.UsuarioViewModel
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,20 +16,7 @@ class MainActivity : ComponentActivity() {
             val navController = rememberNavController()
             val usuarioViewModel: UsuarioViewModel by viewModels()
 
-            NavHost(navController = navController, startDestination = "register") {
-
-                composable("login") {
-                    LoginScreen(navController = navController, usuarioViewModel = usuarioViewModel)
-                }
-
-                composable("register") {
-                    RegisterScreen(navController = navController, usuarioViewModel = usuarioViewModel)
-                }
-
-                composable("home") {
-                    HomeScreen(navController = navController)
-                }
-            }
+            AppNavigation(navController = navController, usuarioViewModel = usuarioViewModel)
         }
     }
 }

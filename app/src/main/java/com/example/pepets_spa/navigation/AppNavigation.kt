@@ -12,7 +12,11 @@ fun AppNavigation(
     navController: NavHostController,
     usuarioViewModel: UsuarioViewModel
 ) {
-    NavHost(navController = navController, startDestination = "register") {
+    NavHost(navController = navController, startDestination = "splash") {
+
+        composable("splash") {
+            SplashScreen(navController)
+        }
 
         composable("login") {
             LoginScreen(navController, usuarioViewModel)
