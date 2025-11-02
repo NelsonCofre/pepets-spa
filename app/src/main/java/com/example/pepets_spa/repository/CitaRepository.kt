@@ -10,4 +10,7 @@ class CitaRepository(private val citaDao: CitaDao) {
     suspend fun eliminar(cita: Cita) = citaDao.delete(cita)
     fun obtenerCitas() = citaDao.getAllCitas()
     fun obtenerCitaPorId(id: Int) = citaDao.getCitaById(id)
+
+    fun obtenerCitasDeUsuario(usuarioId: Int) = citaDao.getCitasDeUsuario(usuarioId)
+
 }

@@ -1,7 +1,6 @@
 package com.example.pepets_spa.screens
 
 import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -13,164 +12,106 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.pepets_spa.navigation.BottomNavScreen
+import com.example.pepets_spa.viewmodel.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(navController: NavController, userName: String = "Usuario") {
+fun HomeScreen(navController: NavController, usuarioViewModel: UsuarioViewModel, userName: String = "Usuario") {
 
-    // Animación para el logo
+    val usuarioId = usuarioViewModel.usuarioLogeado.value?.id ?: 0
+
+    val bottomNavItems = listOf(
+        BottomNavScreen.Pets,
+        BottomNavScreen.Services,
+        BottomNavScreen.Appointments,
+        BottomNavScreen.Profile
+    )
+
     var startAnimation by remember { mutableStateOf(false) }
     val scale by animateFloatAsState(targetValue = if (startAnimation) 1f else 0.8f)
     LaunchedEffect(Unit) { startAnimation = true }
 
+    var selectedItem by remember { mutableStateOf<BottomNavScreen>(BottomNavScreen.Pets) }
+
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = "Pepets Spa",
-                        fontSize = 26.sp,
-                        fontWeight = FontWeight.ExtraBold,
-                        color = Color(0xFF0288D1),
-                        modifier = Modifier.shadow(8.dp, spotColor = Color(0xFF81D4FA))
-                    )
-                },
-                actions = {
-                    IconButton(onClick = {
-                        navController.navigate("login") {
-                            popUpTo("home") { inclusive = true }
-                        }
-                    }) {
-                        Icon(
-                            imageVector = Icons.Default.Logout,
-                            contentDescription = "Cerrar sesión",
-                            tint = Color(0xFF0288D1)
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(
+                        Brush.horizontalGradient(
+                            colors = listOf(Color(0xFF0288D1), Color(0xFF4FC3F7))
                         )
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color.Transparent
+                    )
+            ) {
+                TopAppBar(
+                    title = {
+                        Text(
+                            text = "Pepets Spa",
+                            fontSize = 26.sp,
+                            fontWeight = androidx.compose.ui.text.font.FontWeight.ExtraBold,
+                            color = Color.White
+                        )
+                    },
+                    actions = {
+                        IconButton(onClick = {
+                            navController.navigate("login") {
+                                popUpTo("home") { inclusive = true }
+                            }
+                        }) {
+                            Icon(
+                                imageVector = Icons.Default.Logout,
+                                contentDescription = "Cerrar sesión",
+                                tint = Color.White
+                            )
+                        }
+                    },
+                    colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent),
+                    modifier = Modifier.shadow(8.dp, RoundedCornerShape(bottomStart = 24.dp, bottomEnd = 24.dp))
                 )
-            )
+            }
         },
-        containerColor = Color.Transparent
+        bottomBar = {
+            NavigationBar(
+                containerColor = Color(0xFF0288D1),
+                tonalElevation = 8.dp
+            ) {
+                bottomNavItems.forEach { screen ->
+                    NavigationBarItem(
+                        icon = { Icon(screen.icon, contentDescription = screen.title, tint = if (screen == selectedItem) Color.White else Color(0xFFB3E5FC)) },
+                        label = { Text(screen.title, color = if (screen == selectedItem) Color.White else Color(0xFFB3E5FC)) },
+                        selected = screen == selectedItem,
+                        onClick = { selectedItem = screen }
+                    )
+                }
+            }
+        },
+        containerColor = Color(0xFFE3F2FD)
     ) { paddingValues ->
         Box(
             modifier = Modifier
                 .fillMaxSize()
+                .padding(paddingValues)
                 .background(
-                    Brush.linearGradient(
-                        colors = listOf(Color(0xFFB3E5FC), Color(0xFFFFFFFF)),
-                        start = Offset(0f, 0f),
-                        end = Offset(1000f, 1800f)
+                    Brush.verticalGradient(
+                        colors = listOf(Color(0xFFB3E5FC), Color(0xFFFFFFFF))
                     )
                 )
-                .padding(paddingValues)
         ) {
-            // Fondo con huellitas
-            Canvas(modifier = Modifier.fillMaxSize()) {
-                drawIntoCanvas {
-                    repeat(10) { i ->
-                        drawCircle(
-                            color = Color(0xFF0288D1).copy(alpha = 0.07f),
-                            radius = 85f,
-                            center = Offset(
-                                x = (i * 190).toFloat() % size.width,
-                                y = (i * 260).toFloat() % size.height
-                            )
-                        )
-                    }
-                }
-            }
-
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 28.dp, vertical = 36.dp)
-            ) {
-                Spacer(modifier = Modifier.height(60.dp))
-
-                // Logo y saludo
-                Icon(
-                    imageVector = Icons.Default.Pets,
-                    contentDescription = "Logo Pepets Spa",
-                    tint = Color(0xFF0288D1),
-                    modifier = Modifier
-                        .size(85.dp)
-                        .scale(scale)
+            when (selectedItem) {
+                BottomNavScreen.Pets -> PetsScreen(navController)
+                BottomNavScreen.Services -> ServicesScreen(navController)
+                BottomNavScreen.Appointments -> AppointmentScreen(
+                    navController = navController,
+                    usuarioId = usuarioId
                 )
-
-                Spacer(modifier = Modifier.height(12.dp))
-
-                Text(
-                    text = "¡Hola, $userName! 👋",
-                    fontSize = 22.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color(0xFF0288D1),
-                    textAlign = TextAlign.Center
-                )
-
-                Text(
-                    text = "¿Qué deseas hacer hoy?",
-                    fontSize = 16.sp,
-                    color = Color(0xFF4F4F4F),
-                    textAlign = TextAlign.Center
-                )
-
-                Spacer(modifier = Modifier.height(36.dp))
-
-                // Tarjeta con opciones
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .wrapContentHeight()
-                        .shadow(12.dp, RoundedCornerShape(32.dp)),
-                    shape = RoundedCornerShape(32.dp),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color.White)
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .padding(28.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.spacedBy(20.dp)
-                    ) {
-                        Text(
-                            text = "Menú Principal",
-                            fontSize = 22.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = Color(0xFF0288D1)
-                        )
-
-                        Divider(thickness = 1.dp, color = Color(0xFFB3E5FC))
-
-                        HomeButton("Ver Mascotas", Icons.Default.Pets, listOf(Color(0xFF81D4FA), Color(0xFF4FC3F7))) {
-                            navController.navigate("pets")
-                        }
-
-                        HomeButton("Servicios", Icons.Default.MiscellaneousServices, listOf(Color(0xFF4FC3F7), Color(0xFF29B6F6))) {
-                            navController.navigate("services")
-                        }
-
-                        HomeButton("Citas", Icons.Default.Event, listOf(Color(0xFF29B6F6), Color(0xFF0288D1))) {
-                            navController.navigate("appointments")
-                        }
-
-                        HomeButton("Perfil", Icons.Default.Person, listOf(Color(0xFF0288D1), Color(0xFF0277BD))) {
-                            navController.navigate("profile")
-                        }
-                    }
-                }
+                BottomNavScreen.Profile -> ProfileScreen(navController, userName)
             }
         }
     }
@@ -202,18 +143,9 @@ fun HomeButton(
             contentAlignment = Alignment.Center
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(
-                    imageVector = icon,
-                    contentDescription = text,
-                    tint = Color.White
-                )
+                Icon(icon, contentDescription = text, tint = Color.White)
                 Spacer(modifier = Modifier.width(10.dp))
-                Text(
-                    text = text,
-                    color = Color.White,
-                    fontSize = 17.sp,
-                    fontWeight = FontWeight.Bold
-                )
+                Text(text, color = Color.White, fontWeight = androidx.compose.ui.text.font.FontWeight.Bold, fontSize = 17.sp)
             }
         }
     }

@@ -9,17 +9,13 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 
 @Composable
-fun ProfileScreen(navController: NavController) {
-    Box(
+fun ProfileScreen(navController: NavController, userName: String) {
+    Column(
         modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Text("Perfil del Usuario", style = MaterialTheme.typography.titleLarge)
-            Spacer(modifier = Modifier.height(16.dp))
-            Button(onClick = { navController.popBackStack() }) {
-                Text("Volver")
-            }
-        }
+        Text(text = "Hola, $userName!")
+        // resto del contenido del perfil...
     }
 }

@@ -30,7 +30,10 @@ import androidx.navigation.NavController
 import com.example.pepets_spa.viewmodel.UsuarioViewModel
 
 @Composable
-fun LoginScreen(navController: NavController, usuarioViewModel: UsuarioViewModel) {
+fun LoginScreen(
+    navController: NavController,
+    usuarioViewModel: UsuarioViewModel = viewModel()
+) {
     val context = LocalContext.current
 
     var email by remember { mutableStateOf("") }
@@ -45,7 +48,6 @@ fun LoginScreen(navController: NavController, usuarioViewModel: UsuarioViewModel
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        // Logo
         Icon(
             imageVector = Icons.Default.Pets,
             contentDescription = "Logo",
@@ -61,7 +63,6 @@ fun LoginScreen(navController: NavController, usuarioViewModel: UsuarioViewModel
 
         Spacer(modifier = Modifier.height(32.dp))
 
-        // Campos
         OutlinedTextField(
             value = email,
             onValueChange = { email = it },
@@ -83,12 +84,14 @@ fun LoginScreen(navController: NavController, usuarioViewModel: UsuarioViewModel
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // BOTÓN LOGIN
         Button(
             onClick = {
+                // Llamamos al ViewModel
                 usuarioViewModel.validarLogin(email, password) { success ->
                     if (success) {
-                        navController.navigate("home")
+                        navController.navigate("home") {
+                            popUpTo("login") { inclusive = true }
+                        }
                     } else {
                         errorMsg = "Email o contraseña incorrectos"
                         Toast.makeText(context, errorMsg, Toast.LENGTH_SHORT).show()

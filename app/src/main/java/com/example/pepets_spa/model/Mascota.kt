@@ -10,6 +10,7 @@ data class Mascota(
     val edad: Int,
     val especie: String,
     val raza: String? = null,
-    val propietarioId: Int,    // ID del usuario dueño
-    val imageRes: Int          // Referencia a drawable
+    val propietarioId: Int,
+    val imageRes: Int
 )
+

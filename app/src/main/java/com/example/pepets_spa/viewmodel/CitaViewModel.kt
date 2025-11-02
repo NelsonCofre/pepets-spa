@@ -34,4 +34,9 @@ class CitaViewModel(application: Application) : AndroidViewModel(application) {
     fun obtenerCitaPorId(id: Int): LiveData<Cita?> {
         return citaRepository.obtenerCitaPorId(id).asLiveData()
     }
+
+    fun obtenerCitasDeUsuario(usuarioId: Int): LiveData<List<Cita>> {
+        return citaRepository.obtenerCitasDeUsuario(usuarioId).asLiveData()
+    }
+
 }

@@ -5,6 +5,7 @@ import androidx.room.RoomDatabase
 import com.example.pepets_spa.model.*
 import com.example.pepets_spa.repository.dao.*
 
+
 @Database(
     entities = [
         Usuario::class,
@@ -13,7 +14,7 @@ import com.example.pepets_spa.repository.dao.*
         Cita::class,
         ServicioMascota::class
     ],
-    version = 1,
+    version = 2,  // <-- subir de 1 a 2
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -35,7 +36,7 @@ abstract class AppDatabase : RoomDatabase() {
                     AppDatabase::class.java,
                     "pepets_spa.db"
                 )
-                    .fallbackToDestructiveMigration() // elimina datos si cambia la versión
+                    .fallbackToDestructiveMigration() // elimina datos antiguos
                     .build()
                 INSTANCE = instance
                 instance
@@ -43,3 +44,4 @@ abstract class AppDatabase : RoomDatabase() {
         }
     }
 }
+

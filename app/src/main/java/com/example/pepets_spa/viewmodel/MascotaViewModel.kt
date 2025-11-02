@@ -34,4 +34,10 @@ class MascotaViewModel(application: Application) : AndroidViewModel(application)
     fun obtenerMascotaPorId(id: Int): LiveData<Mascota?> {
         return mascotaRepository.obtenerMascotaPorId(id).asLiveData()
     }
+
+    fun obtenerMascotasDeUsuario(usuarioId: Int): LiveData<List<Mascota>> {
+        return mascotaRepository.obtenerMascotasDeUsuario(usuarioId).asLiveData()
+    }
+
+
 }

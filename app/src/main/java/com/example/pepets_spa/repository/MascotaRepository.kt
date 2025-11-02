@@ -14,4 +14,8 @@ class MascotaRepository(private val mascotaDao: MascotaDao) {
     fun obtenerMascotas() = mascotaDao.getAllMascotas()
 
     fun obtenerMascotaPorId(id: Int) = mascotaDao.getMascotaById(id)
+
+    fun obtenerMascotasDeUsuario(usuarioId: Int) = mascotaDao.getMascotasDeUsuario(usuarioId)
+
+
 }

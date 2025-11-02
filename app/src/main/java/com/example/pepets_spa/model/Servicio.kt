@@ -9,5 +9,7 @@ data class Servicio(
     val nombre: String,
     val descripcion: String,
     val precio: Double,
-    val tipo: String           // "baño", "corte", "alojamiento"
+    val tipo: String,
+    val duracion: Int
+
 )
