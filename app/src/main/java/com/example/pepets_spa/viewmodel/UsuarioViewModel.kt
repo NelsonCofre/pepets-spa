@@ -39,4 +39,13 @@ class UsuarioViewModel(application: Application) : AndroidViewModel(application)
             callback(user != null && user.password == password)
         }
     }
+
+    fun existeUsuario(email: String, onResult: (Boolean) -> Unit) {
+        viewModelScope.launch {
+            val usuario = usuarioRepository.obtenerUsuarioPorEmail(email)
+            onResult(usuario != null)
+        }
+    }
+
+
 }

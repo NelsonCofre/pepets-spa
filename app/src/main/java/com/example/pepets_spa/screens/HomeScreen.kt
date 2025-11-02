@@ -1,4 +1,4 @@
-package com.example.pepets_spa.ui.screens
+package com.example.pepets_spa.screens
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Canvas

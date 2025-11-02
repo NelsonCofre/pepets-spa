@@ -1,4 +1,4 @@
-package com.example.pepets_spa.ui.screens
+package com.example.pepets_spa.screens
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*

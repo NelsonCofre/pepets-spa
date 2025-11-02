@@ -22,4 +22,8 @@ interface UsuarioDao {
     // 👇 Importante: que devuelva Usuario?, no LiveData<Usuario?>
     @Query("SELECT * FROM usuarios WHERE email = :email LIMIT 1")
     suspend fun getUsuarioByEmail(email: String): Usuario?
+
+    @Query("SELECT * FROM usuarios WHERE email = :email LIMIT 1")
+    suspend fun obtenerPorEmail(email: String): Usuario?
+
 }

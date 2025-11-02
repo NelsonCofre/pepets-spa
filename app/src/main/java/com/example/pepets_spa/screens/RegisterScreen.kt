@@ -1,4 +1,4 @@
-package com.example.pepets_spa.ui.screens
+package com.example.pepets_spa.screens
 
 import android.widget.Toast
 import androidx.compose.animation.core.animateFloatAsState
@@ -36,213 +36,100 @@ fun RegisterScreen(navController: NavController, usuarioViewModel: UsuarioViewMo
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
-    // Animación inicial para el logo
-    var startAnimation by remember { mutableStateOf(false) }
-    val scale by animateFloatAsState(targetValue = if (startAnimation) 1f else 0.8f)
-
-    LaunchedEffect(Unit) { startAnimation = true }
-
-    Box(
+    Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(
-                Brush.linearGradient(
-                    colors = listOf(
-                        Color(0xFFB3E5FC),
-                        Color(0xFFFFFFFF)
-                    ),
-                    start = Offset(0f, 0f),
-                    end = Offset(1000f, 1800f)
-                )
-            )
+            .background(Color(0xFFE3F2FD))
+            .padding(32.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
-        // Huellitas decorativas en el fondo
-        Canvas(modifier = Modifier.fillMaxSize()) {
-            drawIntoCanvas {
-                repeat(8) { i ->
-                    drawCircle(
-                        color = Color(0xFF0288D1).copy(alpha = 0.08f),
-                        radius = 80f,
-                        center = Offset(
-                            x = (i * 180).toFloat() % size.width,
-                            y = (i * 250).toFloat() % size.height
-                        )
-                    )
-                }
-            }
-        }
+        Icon(
+            imageVector = Icons.Default.Pets,
+            contentDescription = "Logo",
+            tint = Color(0xFF0288D1),
+            modifier = Modifier.size(80.dp)
+        )
 
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = 28.dp, vertical = 36.dp),
-            verticalArrangement = Arrangement.Top
-        ) {
-            Spacer(modifier = Modifier.height(40.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
-            // Logo + Nombre
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Icon(
-                    imageVector = Icons.Default.Pets,
-                    contentDescription = "Logo Pepets Spa",
-                    tint = Color(0xFF0288D1),
-                    modifier = Modifier
-                        .size(90.dp)
-                        .scale(scale)
-                )
+        Text("Pepets Spa", fontSize = 28.sp, fontWeight = FontWeight.Bold, color = Color(0xFF0288D1))
+        Spacer(modifier = Modifier.height(8.dp))
+        Text("¡Regístrate y consiente a tu mascota!", fontSize = 16.sp, color = Color(0xFF4F4F4F))
 
-                Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(32.dp))
 
-                // Título limpio (sin sombra rectangular)
-                Text(
-                    text = "Pepets Spa",
-                    fontSize = 34.sp,
-                    fontWeight = FontWeight.ExtraBold,
-                    color = Color(0xFF0288D1),
-                    textAlign = TextAlign.Center
-                )
+        OutlinedTextField(
+            value = nombre,
+            onValueChange = { nombre = it },
+            label = { Text("Nombre completo") },
+            singleLine = true,
+            modifier = Modifier.fillMaxWidth()
+        )
 
-                Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
-                Text(
-                    text = "¡Regístrate y consiente a tu mascota con amor!",
-                    fontSize = 16.sp,
-                    color = Color(0xFF4F4F4F),
-                    textAlign = TextAlign.Center
-                )
-            }
+        OutlinedTextField(
+            value = email,
+            onValueChange = { email = it },
+            label = { Text("Correo electrónico") },
+            singleLine = true,
+            modifier = Modifier.fillMaxWidth()
+        )
 
-            Spacer(modifier = Modifier.height(36.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
-            // Tarjeta del formulario
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight()
-                    .padding(bottom = 24.dp),
-                shape = RoundedCornerShape(32.dp),
-                elevation = CardDefaults.cardElevation(defaultElevation = 10.dp),
-                colors = CardDefaults.cardColors(containerColor = Color.White)
-            ) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center,
-                    modifier = Modifier.padding(28.dp)
-                ) {
-                    Text(
-                        text = "Crear cuenta",
-                        fontSize = 22.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color(0xFF0288D1),
-                        textAlign = TextAlign.Center
-                    )
+        OutlinedTextField(
+            value = password,
+            onValueChange = { password = it },
+            label = { Text("Contraseña") },
+            singleLine = true,
+            visualTransformation = PasswordVisualTransformation(),
+            modifier = Modifier.fillMaxWidth()
+        )
 
-                    Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(24.dp))
 
-                    OutlinedTextField(
-                        value = nombre,
-                        onValueChange = { nombre = it },
-                        label = { Text("Nombre completo") },
-                        singleLine = true,
-                        shape = RoundedCornerShape(16.dp),
-                        modifier = Modifier.fillMaxWidth(),
-                        colors = OutlinedTextFieldDefaults.colors(
-                            focusedBorderColor = Color(0xFF0288D1),
-                            unfocusedBorderColor = Color(0xFFB0BEC5),
-                            focusedLabelColor = Color(0xFF0288D1)
-                        )
-                    )
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    OutlinedTextField(
-                        value = email,
-                        onValueChange = { email = it },
-                        label = { Text("Correo electrónico") },
-                        singleLine = true,
-                        shape = RoundedCornerShape(16.dp),
-                        modifier = Modifier.fillMaxWidth(),
-                        colors = OutlinedTextFieldDefaults.colors(
-                            focusedBorderColor = Color(0xFF0288D1),
-                            unfocusedBorderColor = Color(0xFFB0BEC5),
-                            focusedLabelColor = Color(0xFF0288D1)
-                        )
-                    )
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    OutlinedTextField(
-                        value = password,
-                        onValueChange = { password = it },
-                        label = { Text("Contraseña") },
-                        singleLine = true,
-                        visualTransformation = PasswordVisualTransformation(),
-                        shape = RoundedCornerShape(16.dp),
-                        modifier = Modifier.fillMaxWidth(),
-                        colors = OutlinedTextFieldDefaults.colors(
-                            focusedBorderColor = Color(0xFF0288D1),
-                            unfocusedBorderColor = Color(0xFFB0BEC5),
-                            focusedLabelColor = Color(0xFF0288D1)
-                        )
-                    )
-
-                    Spacer(modifier = Modifier.height(28.dp))
-
-                    // Botón con gradiente
-                    Button(
-                        onClick = {
-                            if (nombre.isNotBlank() && email.isNotBlank() && password.isNotBlank()) {
-                                val nuevoUsuario = Usuario(1, nombre, email, password, null, null)
-                                usuarioViewModel.insertar(nuevoUsuario)
-                                Toast.makeText(context, "Usuario registrado correctamente", Toast.LENGTH_SHORT).show()
-                                navController.navigate("login")
-                            } else {
-                                Toast.makeText(context, "Completa todos los campos", Toast.LENGTH_SHORT).show()
-                            }
-                        },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(55.dp),
-                        shape = RoundedCornerShape(16.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
-                        contentPadding = PaddingValues()
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .background(
-                                    Brush.horizontalGradient(
-                                        listOf(
-                                            Color(0xFF0288D1),
-                                            Color(0xFF4FC3F7)
-                                        )
-                                    ),
-                                    shape = RoundedCornerShape(16.dp)
-                                )
-                                .fillMaxSize(),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text(
-                                "Registrar",
-                                color = Color.White,
-                                fontSize = 17.sp,
-                                fontWeight = FontWeight.Bold
+        // BOTÓN FUNCIONAL
+        Button(
+            onClick = {
+                if (nombre.isNotBlank() && email.isNotBlank() && password.isNotBlank()) {
+                    // Verificar si el correo ya existe
+                    usuarioViewModel.existeUsuario(email) { existe ->
+                        if (existe) {
+                            Toast.makeText(context, "Ya existe un usuario con ese correo", Toast.LENGTH_SHORT).show()
+                        } else {
+                            val nuevoUsuario = Usuario(
+                                nombre = nombre,
+                                email = email,
+                                password = password
                             )
+                            usuarioViewModel.insertar(nuevoUsuario)
+                            Toast.makeText(context, "Usuario registrado correctamente", Toast.LENGTH_SHORT).show()
+                            navController.navigate("login")
                         }
                     }
-
-                    Spacer(modifier = Modifier.height(20.dp))
-
-                    Text(
-                        "¿Ya tienes cuenta? Inicia sesión",
-                        color = Color(0xFF0288D1),
-                        modifier = Modifier.clickable { navController.navigate("login") },
-                        style = MaterialTheme.typography.bodyMedium.copy(
-                            fontWeight = FontWeight.SemiBold
-                        )
-                    )
+                } else {
+                    Toast.makeText(context, "Completa todos los campos", Toast.LENGTH_SHORT).show()
                 }
-            }
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(50.dp),
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF0288D1)),
+            shape = RoundedCornerShape(12.dp)
+        ) {
+            Text("Registrar", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 16.sp)
         }
+
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text(
+            "¿Ya tienes cuenta? Inicia sesión",
+            color = Color(0xFF0288D1),
+            modifier = Modifier.clickable { navController.navigate("login") }
+        )
     }
 }
+

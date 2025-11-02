@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.pepets_spa.ui.screens.*
+import com.example.pepets_spa.screens.*
 import com.example.pepets_spa.viewmodel.UsuarioViewModel
 
 @Composable
@@ -12,11 +12,7 @@ fun AppNavigation(
     navController: NavHostController,
     usuarioViewModel: UsuarioViewModel
 ) {
-    NavHost(navController = navController, startDestination = "splash") {
-
-        composable("splash") {
-            SplashScreen(navController)
-        }
+    NavHost(navController = navController, startDestination = "login") {
 
         composable("login") {
             LoginScreen(navController, usuarioViewModel)
@@ -42,7 +38,7 @@ fun AppNavigation(
             ServicesScreen(navController)
         }
 
-        composable("appointments") {
+        composable("appointment") {
             AppointmentScreen(navController)
         }
     }
