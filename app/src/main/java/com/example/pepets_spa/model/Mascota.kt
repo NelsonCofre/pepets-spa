@@ -11,6 +11,6 @@ data class Mascota(
     val especie: String,
     val raza: String? = null,
     val propietarioId: Int,
-    val imageRes: Int
+    val imageRes: Int?
 )
 

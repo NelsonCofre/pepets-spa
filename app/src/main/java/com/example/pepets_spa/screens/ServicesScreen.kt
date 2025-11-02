@@ -59,19 +59,6 @@ fun ServicesScreen(
                 }
             }
         }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Button(
-            onClick = { navController.popBackStack() },
-            modifier = Modifier.align(Alignment.CenterHorizontally),
-            shape = androidx.compose.foundation.shape.RoundedCornerShape(12.dp)
-        ) {
-            Text(
-                "Volver",
-                fontWeight = androidx.compose.ui.text.font.FontWeight.Bold
-            )
-        }
     }
 }
 

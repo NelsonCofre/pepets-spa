@@ -14,7 +14,7 @@ import com.example.pepets_spa.repository.dao.*
         Cita::class,
         ServicioMascota::class
     ],
-    version = 2,  // <-- subir de 1 a 2
+    version = 3,  // <-- subir de 1 a 2
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {

@@ -105,14 +105,24 @@ fun HomeScreen(navController: NavController, usuarioViewModel: UsuarioViewModel,
                 )
         ) {
             when (selectedItem) {
-                BottomNavScreen.Pets -> PetsScreen(navController)
-                BottomNavScreen.Services -> ServicesScreen(navController)
+                BottomNavScreen.Pets -> PetsScreen(
+                    navController = navController,
+                    usuarioViewModel = usuarioViewModel  // ✅ se pasa el ViewModel
+                )
+                BottomNavScreen.Services -> ServicesScreen(
+                    navController = navController,
+                    usuarioViewModel = usuarioViewModel // ✅ se pasa el ViewModel
+                )
                 BottomNavScreen.Appointments -> AppointmentScreen(
                     navController = navController,
                     usuarioId = usuarioId
                 )
-                BottomNavScreen.Profile -> ProfileScreen(navController, userName)
+                BottomNavScreen.Profile -> ProfileScreen(
+                    navController = navController,
+                    userName = userName
+                )
             }
+
         }
     }
 }

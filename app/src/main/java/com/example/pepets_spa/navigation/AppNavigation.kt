@@ -37,9 +37,14 @@ fun AppNavigation(
         }
 
 
+
         composable("pets") {
-            PetsScreen(navController)
+            PetsScreen(
+                navController = navController,
+                usuarioViewModel = usuarioViewModel
+            )
         }
+
 
         composable("profile") {
             ProfileScreen(navController, userName = usuarioLogeado?.nombre ?: "Usuario")

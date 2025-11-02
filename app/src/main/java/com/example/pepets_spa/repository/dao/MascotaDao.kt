@@ -24,4 +24,5 @@ interface MascotaDao {
 
     @Query("SELECT * FROM mascotas WHERE propietarioId = :usuarioId")
     fun getMascotasDeUsuario(usuarioId: Int): Flow<List<Mascota>>
+
 }
