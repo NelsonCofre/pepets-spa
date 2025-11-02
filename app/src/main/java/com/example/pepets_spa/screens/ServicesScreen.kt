@@ -1,18 +1,23 @@
 package com.example.pepets_spa.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.pepets_spa.model.Servicio
-import com.example.pepets_spa.viewmodel.*
+import com.example.pepets_spa.viewmodel.ServicioViewModel
+import com.example.pepets_spa.viewmodel.UsuarioViewModel
 
 @Composable
 fun ServicesScreen(
@@ -26,12 +31,14 @@ fun ServicesScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(Color(0xFFF2F2F7))
             .padding(16.dp)
     ) {
         Text(
             "Servicios disponibles",
-            style = MaterialTheme.typography.titleLarge.copy(
-                fontWeight = androidx.compose.ui.text.font.FontWeight.Bold
+            style = MaterialTheme.typography.headlineMedium.copy(
+                fontWeight = FontWeight.Bold,
+                color = Color(0xFF333333)
             ),
             modifier = Modifier.padding(bottom = 16.dp)
         )
@@ -43,7 +50,7 @@ fun ServicesScreen(
             ) {
                 Text(
                     "No hay servicios disponibles",
-                    style = MaterialTheme.typography.bodyMedium
+                    style = MaterialTheme.typography.bodyMedium.copy(color = Color(0xFF8E8E93))
                 )
             }
         } else {
@@ -71,8 +78,9 @@ fun ServicioItem(
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight(),
-        shape = androidx.compose.foundation.shape.RoundedCornerShape(12.dp),
-        elevation = CardDefaults.cardElevation(4.dp)
+        shape = RoundedCornerShape(16.dp),
+        elevation = CardDefaults.cardElevation(6.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
         Column(
             modifier = Modifier
@@ -83,17 +91,30 @@ fun ServicioItem(
             Text(
                 servicio.nombre,
                 style = MaterialTheme.typography.titleMedium.copy(
-                    fontWeight = androidx.compose.ui.text.font.FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    color = Color(0xFF4A4A4A)
                 )
             )
 
-            Text(servicio.descripcion, style = MaterialTheme.typography.bodyMedium)
+            Text(
+                servicio.descripcion,
+                style = MaterialTheme.typography.bodyMedium.copy(color = Color(0xFF616161))
+            )
 
-            Text("Precio: $${servicio.precio}", style = MaterialTheme.typography.bodyMedium)
+            Text(
+                "Precio: $${servicio.precio}",
+                style = MaterialTheme.typography.bodyMedium.copy(color = Color(0xFF616161))
+            )
 
-            Text("Tipo: ${servicio.tipo}", style = MaterialTheme.typography.bodyMedium)
+            Text(
+                "Tipo: ${servicio.tipo}",
+                style = MaterialTheme.typography.bodyMedium.copy(color = Color(0xFF616161))
+            )
 
-            Text("Duración: ${servicio.duracion} minutos", style = MaterialTheme.typography.bodyMedium)
+            Text(
+                "Duración: ${servicio.duracion} minutos",
+                style = MaterialTheme.typography.bodyMedium.copy(color = Color(0xFF616161))
+            )
 
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -103,12 +124,12 @@ fun ServicioItem(
             ) {
                 Button(
                     onClick = { onAgendarClick(servicio) },
-                    shape = androidx.compose.foundation.shape.RoundedCornerShape(8.dp)
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6C63FF)),
+                    shape = RoundedCornerShape(12.dp)
                 ) {
-                    Text("Agendar")
+                    Text("Agendar", color = Color.White)
                 }
             }
         }
     }
 }
-

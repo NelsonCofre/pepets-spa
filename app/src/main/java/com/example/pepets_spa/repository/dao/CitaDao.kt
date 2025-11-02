@@ -24,5 +24,9 @@ interface CitaDao {
 
     @Delete
     suspend fun delete(cita: Cita)
+
+    @Query("SELECT * FROM citas WHERE mascotaId = :mascotaId")
+    fun getCitasPorMascota(mascotaId: Int): Flow<List<Cita>>
+
 }
 

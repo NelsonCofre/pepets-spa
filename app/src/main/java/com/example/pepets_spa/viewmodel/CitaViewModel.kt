@@ -39,4 +39,14 @@ class CitaViewModel(application: Application) : AndroidViewModel(application) {
         return citaRepository.obtenerCitasDeUsuario(usuarioId).asLiveData()
     }
 
+    fun eliminarCitasPorMascota(mascotaId: Int) = viewModelScope.launch {
+        val citas = citaRepository.obtenerCitasDeMascota(mascotaId)
+        citas.collect { lista ->
+            lista.forEach { cita ->
+                eliminar(cita) // tu función existente para eliminar cita
+            }
+        }
+    }
+
+
 }
