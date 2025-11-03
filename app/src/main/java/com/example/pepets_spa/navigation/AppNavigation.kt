@@ -47,8 +47,9 @@
 
 
             composable("profile") {
-                ProfileScreen(navController, userName = usuarioLogeado?.nombre ?: "Usuario")
+                ProfileScreen(navController = navController)
             }
+
 
             composable("services") {
                 ServicesScreen(navController, usuarioViewModel = usuarioViewModel)
@@ -79,5 +80,8 @@
                     usuarioId = usuarioId
                 )
             }
+            composable("edit_profile") { EditProfileScreen(navController, usuarioViewModel) }
+            composable("change_password") { ChangePasswordScreen(navController, usuarioViewModel) }
+
         }
     }
