@@ -19,6 +19,10 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+
+
+
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -43,6 +47,8 @@ android {
 dependencies {
 
     implementation("androidx.compose.material:material-icons-extended")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -57,10 +63,12 @@ dependencies {
     implementation("androidx.room:room-runtime:2.6.0")
     implementation(libs.androidx.compose.animation.core)
     implementation(libs.androidx.compose.runtime.livedata)
-    implementation(libs.androidx.compose.foundation)   // Core de Room
+    implementation(libs.androidx.compose.foundation)
+    implementation(libs.firebase.appdistribution.gradle)   // Core de Room
     kapt("androidx.room:room-compiler:2.6.0")             // Generación de código
     implementation("androidx.room:room-ktx:2.6.0")
     testImplementation(libs.junit)
+
 
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
